@@ -29,17 +29,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		PasswordEncoder pe = passwordEncoder();
 		//Il est impératif de toujours stocké en mémoire ou en base des mots de pass crypté
 		//création d'utilisateurs en mémoire avec mot de passe crypté et des rôles distincts		
-		//auth.inMemoryAuthentication().withUser("mohamed").password(pe.encode("12345")).roles("ADMIN","USER");	
-		//auth.inMemoryAuthentication().withUser("aymene").password(pe.encode("12345")).roles("USER");
+		auth.inMemoryAuthentication().withUser("mohamed").password(pe.encode("12345")).roles("ADMIN","USER");	
+		auth.inMemoryAuthentication().withUser("aymene").password(pe.encode("12345")).roles("USER");
 		//indique à Spring l'algo utilisé pour le cryptage des pwd
-		//auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder());
+		auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder());
 		
-		auth.jdbcAuthentication()
-			.dataSource(dataSource)			//Spring va ici vérifier si l'utilisateur existe ou pas, si oui il compare les pwd, si ok il enchaine
-			.usersByUsernameQuery("select username as principal, password as credentials, active from T_Users where username=?")
-			.authoritiesByUsernameQuery("select username as principal, role as role from T_Users_Roles where username=?") //chargement des rôles pour username
-			.rolePrefix("ROLE_")		//ajout d'un prefix, par ex si le role est ADMIN => ROLE_ADMIN
-			.passwordEncoder(passwordEncoder());	//indique l'algo utilisé pour crypter les pwd
+//		auth.jdbcAuthentication()
+//			.dataSource(dataSource)			//Spring va ici vérifier si l'utilisateur existe ou pas, si oui il compare les pwd, si ok il enchaine
+//			.usersByUsernameQuery("select username as principal, password as credentials, active from T_Users where username=?")
+//			.authoritiesByUsernameQuery("select username as principal, role as role from T_Users_Roles where username=?") //chargement des rôles pour username
+//			.rolePrefix("ROLE_")		//ajout d'un prefix, par ex si le role est ADMIN => ROLE_ADMIN
+//			.passwordEncoder(passwordEncoder());	//indique l'algo utilisé pour crypter les pwd
 	}
 	
 	@Bean	//annotation permettant à cet objet d'être inscrit dans le contexte de Spring
